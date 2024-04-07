@@ -3,6 +3,7 @@
 #include <filesystem>
 #include "filenameMatcher.h"
 #include <unordered_map>
+#include <cstdlib> 
 
 class DependencyProvider { 
 private:
@@ -26,10 +27,23 @@ public:
 
     int fileId = filenameMatcher.filenameToNumber(filePath.filename().string());
 
+    if (fileId == -1) {
+        std::cerr << "Warning: File " << filePath.filename() << " not found in filename mapping." << std::endl;
+        return;
+    }
+
+
     while (std::getline(file, line)) {
         if (std::regex_search(line, match, includePattern) && match.size() > 1) {
-            std::string includedFile = match[1].str();
-            int includedFileId = filenameMatcher.filenameToNumber(includedFile);
+            std::string includedFilename = match[1].str();
+            std::filesystem::path includedFilePath = filePath.parent_path() / includedFilename;
+
+            if (!std::filesystem::exists(includedFilePath)) {
+                std::cerr << "The file " << includedFilename << " included in " << filePath.filename() << " was not found; file processing is terminated." << std::endl;
+                exit(1);  // или можно использовать другой способ обработки ошибки
+            }
+
+            int includedFileId = filenameMatcher.filenameToNumber(includedFilename);
             if (includedFileId != -1) {
                 dependencies[fileId].push_back(includedFileId);
             }
@@ -37,13 +51,14 @@ public:
     }
 }
 
+
     void analyzeDependencies() { 
     for(const auto& entry : std::filesystem::directory_iterator(directory)) { 
         if(entry.path().extension() == ".h") { 
             processFile(entry.path());
         }
     }
-}
+}   
 };  
 
 

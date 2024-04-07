@@ -1,7 +1,6 @@
 #include <unordered_map>
 #include <vector>
 #include <stack>
-#include <iostream>
 
 class OrderProvider {
 private:
@@ -19,7 +18,6 @@ public:
         for (const auto& pair : dependencies) {
             if (!visited[pair.first]) {
                 if (isCyclic(pair.first, visited, recStack, stack)) {
-                    std::cout << "Cycle detected. Cannot perform topological sort." << std::endl;
                     return {};
                 }
             }
