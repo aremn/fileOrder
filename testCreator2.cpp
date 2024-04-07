@@ -2,6 +2,8 @@
 #include <iostream>
 #include <filesystem>
 
+/// Создает цикличные header'ы
+
 void createFilesWithCyclicDependenciesAndMissingFile(const std::string& directoryPath) {
     std::ofstream file1(directoryPath + "/cycle1.h");
     file1 << "#pragma once\n#include \"cycle2.h\"\n";

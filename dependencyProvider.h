@@ -40,7 +40,7 @@ public:
 
             if (!std::filesystem::exists(includedFilePath)) {
                 std::cerr << "The file " << includedFilename << " included in " << filePath.filename() << " was not found; file processing is terminated." << std::endl;
-                exit(1);  // или можно использовать другой способ обработки ошибки
+                exit(1); 
             }
 
             int includedFileId = filenameMatcher.filenameToNumber(includedFilename);

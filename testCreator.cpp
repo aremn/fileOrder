@@ -2,9 +2,11 @@
 #include <iostream>
 #include <filesystem>
 
+/// Создает n зависимых друг от друга header'ов, кроме последнего
+
 int main() {
     std::string directoryPath = "./test"; 
-    int numberOfFiles = 1000; 
+    int numberOfFiles = 100; 
 
     std::filesystem::create_directory(directoryPath);
 

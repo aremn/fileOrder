@@ -2,6 +2,8 @@
 #include <iostream>
 #include <filesystem>
 
+/// Сложные зависимости
+
 void createFilesWithComplexDependencies(const std::string& directoryPath) {
     std::ofstream linear1(directoryPath + "/linear1.h");
     linear1 << "#pragma once\n#include \"linear2.h\"\n";
