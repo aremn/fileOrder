@@ -1,25 +1,39 @@
 #include "filenameMatcher.h"
 #include "dependencyProvider.h"
+#include "orderProvider.h"
 #include <iostream>
+#include <vector>
+#include <string>
 
 int main() {
-    std::string testDirectory = "/home/aremn/projects/test"; 
+    std::string directoryPath = "./test";
 
-    FilenameMatcher filenameMatcher(testDirectory);
-    std::cout << "Testing FilenameMatcher:" << std::endl;
-    std::cout << "ID for main.h: " << filenameMatcher.filenameToNumber("main.h") << std::endl;
-    std::cout << "Filename for ID 0: " << filenameMatcher.numberToFilename(0) << std::endl;
+    // Инициализация и тестирование FilenameMatcher
+    FilenameMatcher filenameMatcher(directoryPath);
+    // Простой тест для FilenameMatcher
+    std::cout << "Filename to ID mapping for 'a.h': " << filenameMatcher.filenameToNumber("a.h") << std::endl;
 
-    DependencyProvider dependencyProvider(testDirectory, filenameMatcher);
+    // Инициализация и использование DependencyProvider
+    DependencyProvider dependencyProvider(directoryPath, filenameMatcher);
     dependencyProvider.analyzeDependencies();
 
-    std::cout << "\nDependencies found:" << std::endl;
-    for (const auto& [fileId, dependencies] : dependencyProvider.getDependencies()) {
-        std::cout << filenameMatcher.numberToFilename(fileId) << " depends on: ";
-        for (int depId : dependencies) {
-            std::cout << filenameMatcher.numberToFilename(depId) << " ";
+    // Вывод найденных зависимостей
+    auto dependencies = dependencyProvider.getDependencies();
+    std::cout << "Found dependencies:" << std::endl;
+    for (const auto& [id, deps] : dependencies) {
+        std::cout << "File " << filenameMatcher.numberToFilename(id) << " depends on: ";
+        for (int dep : deps) {
+            std::cout << filenameMatcher.numberToFilename(dep) << " ";
         }
         std::cout << std::endl;
+    }
+
+    // Использование OrderProvider для определения порядка обработки
+    OrderProvider orderProvider(dependencies);
+    auto order = orderProvider.provideOrder();
+    std::cout << "\nProcessing order:" << std::endl;
+    for (int id : order) {
+        std::cout << filenameMatcher.numberToFilename(id) << std::endl;
     }
 
     return 0;

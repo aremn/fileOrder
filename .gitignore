@@ -1,2 +1,7 @@
 /.vscode
 /main.exe
+test/d.h
+test/c.h
+test/b.h
+test/a.h
+main
