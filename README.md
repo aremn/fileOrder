@@ -73,6 +73,6 @@ The file missing.h included in "utils.h" was not found; file processing is termi
 - [Использование std::filesystem для работы с файлами в C++17](https://en.cppreference.com/w/cpp/filesystem)
 - [cppdep GitHub](https://github.com/rakhimov/cppdep)
 - [tomtom-international GitHub](https://github.com/tomtom-international/cpp-dependencies)
-- [Ron Jeffries' Блог](https://www.ronjeffries.com/xprog/articles/tfddep1/)
+- [Блог Ron Jeffries'](https://www.ronjeffries.com/xprog/articles/tfddep1/)
 - [Блог Matt Godbolt’s](https://xania.org/200712/c-plus-plus-header-dependency-tricks)
 - [Карты кода для проектов C++](https://learn.microsoft.com/en-us/visualstudio/modeling/code-maps-for-cpp?view=vs-2022)
